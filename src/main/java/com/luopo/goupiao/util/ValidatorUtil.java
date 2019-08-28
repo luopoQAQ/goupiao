@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ValidatorUtil {
-    private static final Pattern mobile_pattern = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");  //1开头后跟
+    private static final Pattern mobile_pattern = Pattern.compile("^((13[0-9])|(15[0-9])|(17[0-9])|(18[0-9]))\\d{8}$");  //1开头后跟
     private static final Pattern idCard_pattern = Pattern.compile("(^\\d{18})");
 
     public static boolean isIdCard(String value) {

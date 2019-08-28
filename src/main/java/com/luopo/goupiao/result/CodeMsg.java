@@ -30,7 +30,7 @@ public class CodeMsg {
     public static CodeMsg VERIFY_CODE_ERROR = new CodeMsg(500503, "验证码输入错误");
     public static CodeMsg HAS_NO_TRAIN_TICKET = new CodeMsg(500504, "余票不足");
     public static CodeMsg REPEATE_GOUPIAO = new CodeMsg(500505, "不可重复购买");
-    public static CodeMsg ORDER_BY_USER_AND_DATE = new CodeMsg(500505, "您已购买该日车票");
+    public static CodeMsg ORDER_BY_USER_AND_DATE = new CodeMsg(500505, "您已购买该日当前车次车票");
 
     //更多...
 

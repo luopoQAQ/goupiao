@@ -6,7 +6,10 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be205d34-2754-4e07-8dab-1bf802a89384" name="Default Changelist" comment="" />
+    <list default="true" id="be205d34-2754-4e07-8dab-1bf802a89384" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/controller/GoupiaoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/controller/GoupiaoController.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/../源码-分章节/miaosha_7/target/" />
@@ -36,7 +39,25 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/luopo/goupiao/controller/GoupiaoController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="260">
+              <caret line="43" column="10" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1832#1833#0" expanded="true" />
+                <element signature="e#1868#1869#0" expanded="true" />
+                <element signature="e#1944#1945#0" expanded="true" />
+                <element signature="e#1994#1995#0" expanded="true" />
+                <element signature="method#afterPropertiesSet#0;class#GoupiaoController#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -128,7 +149,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/result/CodeMsg.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/service/OrderService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/mapper/OrderMapper.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/controller/GoupiaoController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/GoupiaoApplication.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/controller/IndexController.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
@@ -144,6 +164,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/controller/TuipiaoController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/mapper/TrainMapper.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/home.html" />
+        <option value="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/controller/GoupiaoController.java" />
       </list>
     </option>
   </component>
@@ -348,18 +369,18 @@
     <key name="CreateTestDialog.RecentsKey">
       <recent name="com.luopo.goupiao.mapper" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\project\goupiao\src\main\resources\static\pages" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.luopo.goupiao.redis" />
       <recent name="com.luopo.goupiao.mq" />
       <recent name="com.luopo.goupiao.mapper" />
       <recent name="com.luopo.goupiao.service" />
       <recent name="com.luopo.goupiao.vo" />
-    </key>
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\project\goupiao\src\main\resources\static\pages" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -483,12 +504,20 @@
       <workItem from="1566913280038" duration="1282000" />
       <workItem from="1566955485636" duration="2694000" />
       <workItem from="1566979362018" duration="4692000" />
-      <workItem from="1567002053938" duration="1021000" />
+      <workItem from="1567002053938" duration="1496000" />
     </task>
+    <task id="LOCAL-00001" summary="QAQ">
+      <created>1567003416452</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1567003416452</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="288652000" />
+    <option name="totallyTimeSpent" value="289127000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -501,6 +530,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Image Layers" order="0" />
       <window_info id="Capture Tool" order="1" />
@@ -508,7 +538,7 @@
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Web" order="4" side_tool="true" />
       <window_info id="Designer" order="5" />
-      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.24463807" />
+      <window_info content_ui="combo" id="Project" order="6" visible="true" weight="0.24463807" />
       <window_info id="Structure" order="7" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Statistic" order="0" sideWeight="0.49865952" weight="0.6089466" />
       <window_info anchor="bottom" id="Terminal" order="1" weight="0.32756132" />
@@ -525,7 +555,7 @@
       <window_info anchor="bottom" id="Cvs" order="12" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="13" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="14" weight="0.32756132" />
-      <window_info anchor="bottom" id="Event Log" order="15" sideWeight="0.5013405" weight="0.65367967" />
+      <window_info anchor="bottom" id="Event Log" order="15" sideWeight="0.5013405" weight="0.65317917" />
       <window_info anchor="right" id="Palette" order="0" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Palette&#9;" order="2" />
@@ -540,6 +570,10 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="QAQ" />
+    <option name="LAST_COMMIT_MESSAGE" value="QAQ" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -905,21 +939,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/luopo/goupiao/controller/GoupiaoController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="343">
-          <caret line="181" column="61" selection-start-line="181" selection-start-column="61" selection-end-line="181" selection-end-column="61" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1832#1833#0" expanded="true" />
-            <element signature="e#1868#1869#0" expanded="true" />
-            <element signature="e#1944#1945#0" expanded="true" />
-            <element signature="e#1994#1995#0" expanded="true" />
-            <element signature="method#afterPropertiesSet#0;class#GoupiaoController#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/train_list_zhongzhuan.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="26">
@@ -1008,6 +1027,21 @@
           <caret line="59" lean-forward="true" selection-start-line="59" selection-end-line="59" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luopo/goupiao/controller/GoupiaoController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="43" column="10" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1832#1833#0" expanded="true" />
+            <element signature="e#1868#1869#0" expanded="true" />
+            <element signature="e#1944#1945#0" expanded="true" />
+            <element signature="e#1994#1995#0" expanded="true" />
+            <element signature="method#afterPropertiesSet#0;class#GoupiaoController#0" />
           </folding>
         </state>
       </provider>

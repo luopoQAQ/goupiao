@@ -1,6 +1,5 @@
 package com.luopo.goupiao.controller;
 
-
 import com.luopo.goupiao.access.AccessLimit;
 import com.luopo.goupiao.exception.GlobalException;
 import com.luopo.goupiao.mq.GoupiaoMessage;
@@ -41,6 +40,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/goupiao")
 public class GoupiaoController implements InitializingBean  {
+
+    //一次尝试
 
     // 该车次在确定日期内在from至to区间内已无车票 的map为true
     // 该车次在确定日期内所有车票都售罄 的map为true

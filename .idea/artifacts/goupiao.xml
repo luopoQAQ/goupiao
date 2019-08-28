@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="goupiao">
+    <output-path>$PROJECT_DIR$/../out</output-path>
+    <root id="archive" name="goupiao.jar">
+      <element id="module-output" name="goupiao" />
+    </root>
+  </artifact>
+</component>

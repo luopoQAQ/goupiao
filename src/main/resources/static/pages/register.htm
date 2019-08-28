@@ -1,0 +1,188 @@
+<!DOCTYPE HTML>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/3.3.6/bootstrap.min.css" />
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/jquery-validation/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/jquery-validation/localization/messages_zh.min.js"></script>
+    <script type="text/javascript" src="/layer/layer.js"></script>
+    <script type="text/javascript" src="/js/md5.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <link rel="stylesheet" type="text/css" href="/back/style.css" />
+
+    <title>注册</title>
+
+    <style type="text/css">
+        html,body{
+            height:100%;
+            width:100%;
+        }
+        body{
+            background:url('/img/BackGroundImage.jpg') no-repeat;
+            background-size:100% 100%;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+
+<body>
+<div class="bg-info container" style="width:100%; padding-inline: auto; padding: 10px;">
+    <div class="row">
+        <div class="col-xs-3" align="center"></div>
+        <div class="col-xs-3" align="left">
+            <a href="/index" style="font-weight: bold; font-size: large; font-style: inherit">
+                查询车次</a>
+        </div>
+        <div class="col-xs-3" align="right">
+            <a href="/order" style="font-weight: bold; font-size: large; font-style: inherit;">
+                我的车票</a>
+        </div>
+        <div class="col-xs-3" align="center"></div>
+    </div>
+</div>
+<br/>
+<br/>
+<br/>
+
+<div class="panel panel-danger registerDiv">
+    <div class="panel-heading" align="center">注册</div>
+    <div class="panel-body">
+        <form id="registerForm">
+            <table class="selectTable table">
+                <tr>
+                    <td style="padding: 15px">账号</td>
+                    <td><input id="userName" name="userName" class="form-control" type="text" placeholder="用户名/手机号/邮箱" required="true" minlength="6" maxlength="20"/>
+                    </td>
+                    <td style="padding: 15px">手机号</td>
+                    <td><input id="telephone" name="telephone" class="form-control" type="text" placeholder="手机号码" required="true" minlength="11" maxlength="11"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 15px">姓名</td>
+                    <td><input id="realName" name="realName" class="form-control" type="text" placeholder="真实姓名" required="true" minlength="1" maxlength="32"/>
+                    </td>
+                    <td style="padding: 15px">证件号码</td>
+                    <td><input id="idCard" name="idCard" class="form-control" type="text" placeholder="与姓名匹配的身份证号" required="true" minlength="18" maxlength="18"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:15px">密码</td>
+                    <td><input id="password" name="password" class="form-control" type="password"  placeholder="请输入密码" required="true" minlength="6" maxlength="10" />
+                    </td>
+                    <td style="padding:15px">确认密码</td>
+                    <td><input id="passwordAgain" name="passwordAgain" class="form-control" type="password"  placeholder="请再次输入密码" required="true" minlength="6" maxlength="10" />
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <button class="btn btn-danger"
+                                type="reset" onclick="reset()">重置</button>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td align="left">
+                        <button class="btn btn-danger"
+                                type="submit" onclick="register()">注册</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+</div>
+
+<div >
+    <div align="center">
+        <hr style="border:0;background-color:#093;height:1px;margin-top:80px"/>
+        <div class="text-warning">
+            -- 萝po的项目练习 --
+        </div>
+        <div class="text-warning">
+            -- github :
+            <a class="text-success" href="https://github.com/luopoQAQ">
+                https://github.com/luopoQAQ</a> --
+        </div>
+        <br/>
+    </div>
+</div>
+
+</body>
+<script>
+    function register(){
+        $("#registerForm").validate({
+            submitHandler:function(form){
+                var flag = validatePassword();
+                if ( flag ) {
+                    doRegister();
+                }
+                else {
+                    layer.confirm('两次输入的密码不一致!', {
+                        btn: ['确定'],
+                        yes: function() {
+                            layer.closeAll()
+                        }
+                    })
+                }
+            }
+        });
+    }
+
+    function validatePassword(){
+        var password= document.getElementById("password").value;
+        var passwordAgain = document.getElementById("passwordAgain").value;
+        if(password != passwordAgain){
+            return false;
+        }
+        return true;
+    }
+
+    function doRegister(){
+        showLoading();
+
+        var password = $("#password").val();
+        var salt = passsword_salt;
+        var str = "" + salt.charAt(1) + salt.charAt(2)
+            + password + salt.charAt(3) + salt.charAt(4);
+        password = md5(str);
+
+        $.ajax({
+            url: "/doRegister",
+            type: "POST",
+            data:{
+                userName: $("#userName").val(),
+                telephone: $("#telephone").val(),
+                realName: $("#realName").val(),
+                idCard: $("#idCard").val(),
+                password: password
+            },
+            success:function(data){
+                layer.closeAll();
+                if(data.code == 0){
+                    layer.msg("注册成功");
+
+                    setTimeout(function () {
+                        window.location.href="/pages/login.htm";
+                    }, 600);
+
+                }else if (data.code == 500202) {
+                    layer.confirm('您还没有登录，请登录', {
+                        btn: ['确定','取消'],
+                        yes: function() {
+                            window.location.href="/pages/login.htm";
+                        }
+                    });
+
+                    return false;
+                }else{
+                    layer.msg(data.msg);
+                }
+            },
+            error:function(){
+                layer.closeAll();
+            }
+        });
+    }
+</script>
+
+</html>

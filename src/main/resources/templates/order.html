@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:include="header::header"></div>
+    <title>我的订单</title>
+
+    <style type="text/css">
+        span {
+            padding: 4px 10px;
+        }
+    </style>
+</head>
+
+<body>
+<input id="user" type="hidden" th:value="${user}" />
+
+<div class="bg-info container" style="width:100%; padding-inline: auto; padding: 10px;">
+    <div class="row">
+        <div class="col-xs-3" align="center">
+            <span style="color:#efaf38">
+                <a href="/pages/login.htm">登录</a>
+                |
+                <a href="/pages/register.htm">注册</a>
+            </span>
+        </div>
+        <div class="col-xs-3" align="left">
+            <a href="/index" style="font-weight: bold; font-size: large; font-style: inherit">
+                查询车次</a>
+        </div>
+        <div class="col-xs-3" align="right">
+            <a href="/order" style="font-weight: bold; font-size: large; font-style: inherit;">
+                我的车票</a>
+        </div>
+        <div class="col-xs-3" align="center">
+            <span style="color:#23527c" class="glyphicon glyphicon-user"></span>
+            <span style="color:#23527c; padding: 0px 0px;" th:text="${user != null}?'您好，'"></span>
+            <span style="color:#efaf38; padding: 0px 0px;" th:text="${user != null} ? ${user.realName} : '未登录'"></span>
+        </div>
+    </div>
+</div>
+<br/>
+<br/>
+<br/>
+
+<table class="table table-bordered table-hover " th:align="center" style="width: 1000px" >
+    <thead><tr class="info">
+        <td colspan="5" align="center">我的订单</td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="order,status: ${orderList}">
+        <td colspan="5">
+        <div class="panel panel-warning workingArea">
+                <div class="panel-heading" align="left" th:text="|订票日期${#dates.format(order.createDate, 'yyyy-MM-dd')}|"></div>
+                <div class="panel-body" >
+                    <div class="listOrderDiv">
+                        <table class="table table-bordered table-hover">
+                            <thead><tr class="info">
+                                <td align="center">车次信息</td>
+                                <td align="center">旅客信息</td>
+                                <td align="center">席位信息</td>
+                                <td align="center">票价</td>
+                                <td align="center">车票状态</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr>
+                                <td align="center">
+                                    <div align="center" style="font-weight: bold">
+                                        <span th:text="${order.fromStationName}"></span>
+                                        <span class="glyphicon glyphicon-arrow-right"></span>
+                                        <span th:text="${order.toStationName}"></span>
+                                        <span th:text="${order.trainName}"></span>
+                                    </div>
+                                    <div align="center">
+                                        <span th:text="${#dates.format(order.fromTime, 'yyyy-MM-dd HH:mm')}"></span>开
+                                    </div>
+                                </td>
+                                <td align="center">
+                                    <div align="center">
+                                        <span th:text="${order.realName}"></span>
+                                    </div>
+                                    <div align="center">
+                                        <span th:text="中国居民身份证"></span>
+                                    </div>
+                                </td>
+                                <td align="center">
+                                    <div align="center">
+                                        <span th:text="${order.seatType}"></span>
+                                    </div>
+                                    <div align="center">
+                                        <span th:text="|车厢:${order.carriage}车|"></span>
+                                        <span th:text="|座位:${order.seatLocation}|"></span>
+                                    </div>
+                                </td>
+                                <td align="center">
+                                    <div align="center">
+                                        <span th:text="成人票"></span>
+                                    </div>
+                                    <div>
+                                        <span style="color: orangered" th:text="${order.price}"></span>元
+                                    </div>
+                                </td>
+                                <td align="center">
+                                    <div>
+                                        <span th:text="已付款"></span>
+                                    </div>
+                                    <div>
+                                        <span align="center" style="color: crimson"
+                                              th:text="${order.fromTime > #dates.createNow()}?('待出行'):('已过期')">
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" th:align="right" style="padding: 10px 50px">
+                                    <button align="right" style="padding: 5px 50px" type="button" th:onclick="|doClick(${order.orderId},${order.trainId},
+                                ${order.fromStationId},${order.toStationId},'${order.seatType}','${order.date}')|"
+                                            class="btn btn-warning"
+                                            th:disabled="${order.fromTime > #dates.createNow()} ? 'false' : 'true'" >退票</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div th:include="footer::footer"></div>
+</body>
+
+<script th:inline="javascript">
+    function doClick(orderId,trainId,fromStationId,toStationId,seatType,date){
+        var user = $("#user").val();
+
+        if ($.isEmptyObject(user)) {
+            layer.confirm('您还没有登录，请登录', {
+                btn: ['确定','取消'],
+                yes: function() {
+                    window.location.href="/pages/login.htm";
+                },
+                btn2:function() {
+                    layer.closeAll();
+                }
+            });
+
+            return false;
+        }
+        else {
+            layer.confirm('确定退票？', {
+                btn: ['确定','取消'],
+                yes: function() {
+                    $.ajax({
+                        url: "/tuipiao",
+                        type: "POST",
+                        data:{
+                            orderId: orderId,
+                            trainId: trainId,
+                            fromStationId: fromStationId,
+                            toStationId: toStationId,
+                            seatType: seatType,
+                            date: date
+                        },
+                        success: function(data){
+                            if(data.code == 0){
+                                window.location.href="/order";
+                            }
+                            else {
+                                layer.msg(data.msg);
+                                setTimeout(function () {
+                                    layer.closeAll();
+                                }, 800);
+                            }
+                        },
+                        error: function(){
+                            layer.msg("客户端请求错误,请刷新重试");
+                        }
+                    });
+
+                    return true;
+
+                },
+                btn2:function() {
+                    layer.closeAll();
+                    return false;
+                }
+            });
+
+            return false;
+        }
+
+    }
+</script>
+</html>
+
+

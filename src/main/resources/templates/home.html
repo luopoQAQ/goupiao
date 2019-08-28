@@ -1,0 +1,201 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:include="header::header"></div>
+    <title>首页</title>
+</head>
+
+th:
+
+
+<body>
+<div class="bg-info container" style="width:100%; padding-inline: auto; padding: 10px;">
+    <div class="row">
+        <div class="col-xs-3" align="center">
+            <span style="color:#efaf38">
+                <a href="/pages/login.htm">登录</a>
+                |
+                <a href="/pages/register.htm">注册</a>
+            </span>
+        </div>
+        <div class="col-xs-3" align="left">
+            <a href="/index" style="font-weight: bold; font-size: large; font-style: inherit">
+                查询车次</a>
+        </div>
+        <div class="col-xs-3" align="right">
+            <a href="/order" style="font-weight: bold; font-size: large; font-style: inherit;">
+                我的车票</a>
+        </div>
+        <div class="col-xs-3" align="center">
+            <span style="color:#23527c" class="glyphicon glyphicon-user"></span>
+            <span style="color:#23527c" th:text="${user != null}?'您好，'"></span>
+            <span style="color:#efaf38" th:text="${user != null} ? ${user.realName} : '未登录'"></span>
+        </div>
+    </div>
+</div>
+<br/>
+<br/>
+<br/>
+
+<div class="panel panel-info selectDiv">
+    <div class="panel-heading" align="center">查询车次</div>
+    <div class="panel-body">
+        <!--        <form id="queryTrainListForm" action="/trainList" method="get">-->
+        <form id="queryTrainListForm">
+            <table class="selectTable table">
+                <tr>
+                    <td style="padding: 15px;" >出发地</td>
+                    <td><input id="fromCity" name="fromCity" type="text" class="form-control"/></td>
+                </tr>
+                <tr>
+                    <td style="padding: 15px;" >目的地</td>
+                    <td><input id="toCity" name="toCity" type="text" class="form-control"/></td>
+                </tr>
+                <tr>
+                    <td style="padding: 15px;" >出发日</td>
+                    <td><input id="date" type="date" name="date" class="form-control"/></td>
+                </tr>
+                <tr>
+                    <td th:colspan="2" style="color:cornflowerblue; font-weight: bold" th:align="right">
+                        接续换乘
+                        <span style="padding-left: 5px; color: coral;">
+                            是：<input align="right" type="radio" name="threeStation" value="1" /><br/>
+                        </span>
+                        <span style="padding-left: 5px; color: coral;">
+                            否：<input align="right" type="radio" checked="checked" name="threeStation" value="0" />
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <!--                        <input type="submit" class="btn btn-warning">提交</input>-->
+                        <button type="submit" class="btn btn-warning" onclick="queryTrainList()">提交</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+</div>
+
+<div th:include="footer::footer"></div>
+</body>
+
+<script th:inline="javascript">
+    function checkEmpty(id, name){
+        var value = $("#"+id).val();
+        if(value.length==0){
+            alert(name+ "不能为空");
+            $("#"+id)[0].focus();
+            return false;
+        }
+        return true;
+    }
+
+    function check() {
+        if (!checkEmpty("fromCity", "出发地"))
+            return false;
+        if (!checkEmpty("toCity", "目的地"))
+            return false;
+        if (!checkEmpty("date", "出发日"))
+            return false;
+        return true;
+    }
+
+    function queryTrainList(){
+        $("#queryTrainListForm").validate({
+            submitHandler:function(form){
+                if (check())
+                    doQueryTrainList();
+            }
+        });
+    }
+
+    function doQueryTrainList() {
+        showLoading();
+
+        var threeStation = $("input[name='threeStation']:checked").val()
+
+        var fromCity = $("#fromCity").val();
+        var toCity = $("#toCity").val();
+        var date = $("#date").val();
+
+        if (threeStation == 1) {
+            $.ajax({
+                url: "/trainListZhongzhuan",
+                type: "GET",
+                data: {
+                    fromCity: fromCity,
+                    toCity: toCity,
+                    date: date
+                },
+                success: function (data) {
+                    if (data.code == 0) {
+                        document.open();
+
+                        document.write(data.data);
+
+                        document.close();
+                    }else if (data.code == 500202) {
+                        layer.confirm('您还没有登录，请登录', {
+                            btn: ['确定','取消'],
+                            yes: function() {
+                                window.location.href="/pages/login.htm";
+                            }
+                        });
+
+                        return false;
+                    }else{
+                        layer.msg(data.msg);
+                        setTimeout(function () {
+                        }, 1000);
+                    }
+                },
+                error: function () {
+                    layer.closeAll();
+                }
+            });
+        }
+        else {
+            $.ajax({
+                url: "/trainList",
+                type: "GET",
+                data: {
+                    fromCity: fromCity,
+                    toCity: toCity,
+                    date: date
+                },
+                success: function (data) {
+                    if (data.code === 0) {
+                        document.open();
+
+                        document.write(data.data);
+
+                        document.close();
+                    } else if (data.code == 500202) {
+                        layer.confirm('您还没有登录，请登录', {
+                            btn: ['确定','取消'],
+                            yes: function() {
+                                window.location.href="/pages/login.htm";
+                            }
+                        });
+
+                        return false;
+                    }else{
+                        layer.msg(data.msg);
+                        setTimeout(function () {
+                        }, 1000);
+                    }
+                },
+                error: function () {
+                    layer.closeAll();
+                }
+            });
+        }
+    }
+</script>
+
+</html>
+
+
+

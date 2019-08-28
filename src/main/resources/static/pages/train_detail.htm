@@ -1,0 +1,628 @@
+<!DOCTYPE HTML>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/3.3.6/bootstrap.min.css" />
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/jquery-validation/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/jquery-validation/localization/messages_zh.min.js"></script>
+    <script type="text/javascript" src="/layer/layer.js"></script>
+    <script type="text/javascript" src="/js/md5.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <link rel="stylesheet" type="text/css" href="/back/style.css" />
+
+    <title>车票详情</title>
+
+    <style type="text/css">
+        html, body {
+            height:100%;
+            width:100%;
+        }
+        body {
+            background:url('/img/BackGroundImage.jpg') no-repeat;
+            background-size:100% 100%;
+            background-attachment: fixed;
+        }
+        .trainDetailOneHead {
+            font-weight: bold;
+            font-size: large;
+        }
+        .trainDetailOneBody {
+            padding: 10px 30px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="bg-info container" style="width:100%; padding-inline: auto; padding: 10px;">
+    <div class="row">
+        <div class="col-xs-3" align="center">
+            <span style="color:#efaf38">
+                <a href="/pages/login.htm">登录</a>
+                |
+                <a href="/pages/register.htm">注册</a>
+            </span>
+        </div>
+        <div class="col-xs-3" align="left">
+            <a href="/index" style="font-weight: bold; font-size: large; font-style: inherit">
+                查询车次</a>
+        </div>
+        <div class="col-xs-3" align="right">
+            <a href="/order" style="font-weight: bold; font-size: large; font-style: inherit;">
+                我的车票</a>
+        </div>
+        <div class="col-xs-3" align="center">
+            <span style="color:#23527c" class="glyphicon glyphicon-user"></span>
+            <span style="color:#23527c" id="isLogin"></span>
+        </div>
+    </div>
+</div>
+<br/>
+
+<div class="panel panel-info detailDiv" style="background-color:#eef1f8;">
+    <div class="panel-heading" align="left">车票详情（以下余票信息仅供参考）</div>
+    <div class="panel-body" >
+        <div align="left">
+            <span style="padding: 10px">
+                <span class="trainDetailOneHead" id="trainDate"></span>
+            </span>
+            <span style="padding: 10px">
+                <span class="trainDetailOneHead" class="trainDetailOneHead" id="trainName"></span>次
+            </span>
+            <span style="padding: 10px">
+                <span class="trainDetailOneHead" id="fromStationName"></span>站
+                <span padding="2x" class="trainDetailOneHead" id="fromTime"></span>
+            </span>
+            <span style="padding: 6px">
+                <span>--</span>
+            </span>
+            <span style="padding: 10px">
+                <span class="trainDetailOneHead" id="toStationName"></span>站
+                （<span class="trainDetailOneHead" id="toTime" style="font-weight: unset; font-size: unset;"></span>）
+            </span>
+        </div>
+        <hr style= "border:1px dashed #000" />
+        <div align="left">
+            <span class="trainDetailOneBody" id="shangWuZuo"></span>
+            <span class="trainDetailOneBody" id="yiDengZuo"></span>
+            <span class="trainDetailOneBody" id="erDengZuo"></span>
+            <span class="trainDetailOneBody" id="ruanWo"></span>
+            <span class="trainDetailOneBody" id="yingWo"></span>
+            <span class="trainDetailOneBody" id="yingZuo"></span>
+            <span class="trainDetailOneBody" id="wuZuo"></span>
+        </div>
+        <br/>
+        <div style="color: #3177BF">
+            *显示的票价仅供参考，具体票价以您确认支付时实际的购买票价为准。
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-info detailDiv" style="background-color:aliceblue" >
+    <div class="panel-heading" align="left">乘客信息（填写说明）</div>
+    <div class="panel-body" >
+
+        <div id="userName" style="font-weight: bold; font-size: unset"></div>
+        <hr style= "border:1px dashed #000" />
+
+        <div class="listDataTableDiv">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr class="success">
+                    <td align="center">票种</td>
+                    <td align="center">席别</td>
+                    <td align="center">姓名</td>
+                    <td align="center">证件类型</td>
+                    <td align="center">证件号码</td>
+                    <td align="center">手机号码</td>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr class="warning">
+                    <td align="center">成人票</td>
+                    <td align="center">
+                        <select id="seatType" align="center" class="text-primary">
+                            <opyion >请选择</opyion>
+                            <option id="OPshangWuZuo"></option>
+                            <option id="OPyiDengZuo"></option>
+                            <option id="OPerDengZuo"></option>
+                            <option id="OPruanWo"></option>
+                            <option id="OPyingWo"></option>
+                            <option id="OPyingZuo"></option>
+                            <option id="OPwuZuo"></option>
+                        </select>
+                    </td>
+                    <td id="realName" align="center"></td>
+                    <td align="center">中国居民身份证</td>
+                    <td id="idCard" align="center"></td>
+                    <td id="telephone" align="center"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-danger tiJiaoDiv" style="background-color:#f1ecec;">
+    <div class="panel-body" align="center">
+        <table class="table table-view" >
+            <tr><td align="center"><img align="center" id="verifyCodeImg" width="100" height="32"  style="display:none" onclick="refreshVerifyCode()"/>
+                </td>
+                <td align="center"><input placeholder="请输入左侧算式结果" align="center" id="verifyCode"  class="form-control" style="display:none; width: 160px"/>
+                </td>
+            </tr>
+            <tr>
+                <input id="fromStationId" type="hidden">
+                <input id="toStationId" type="hidden">
+                <input id="trainId" type="hidden">
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <button align="center" class="btn btn-warning" type="button" id="buyButton" onclick="getPath()" >提交订单</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<br/>
+<br/>
+<br/>
+<div>
+    <div align="center">
+        <hr style="border:0;background-color:#00997e;height:1px;margin-top:80px"/>
+        <div class="text-warning">
+            -- 萝po的项目练习 --
+        </div>
+        <div class="text-warning">
+            -- github :
+            <a class="text-success" href="https://github.com/luopoQAQ">
+                https://github.com/luopoQAQ</a> --
+        </div>
+        <br/>
+    </div>
+</div>
+
+</body>
+
+<script>
+
+   function getPath(){
+       var seatType = $("#seatType").val();
+       if($.isEmptyObject(seatType)){
+           layer.confirm('请选择座位类型', {
+               btn: ['确定']
+           });
+
+           $("#seatType").focus();
+           return false;
+       }
+
+       var verifyCode = $("#verifyCode").val();
+       if($.isEmptyObject(verifyCode)){
+           layer.confirm('请输入验证码计算结果', {
+               btn: ['确定']
+           });
+
+           $("#verifyCode").focus();
+           return false;
+       }
+
+       var trainId = $("#trainId").val();
+       var fromStationId = $("#fromStationId").val();
+       var toStationId = $("#toStationId").val();
+       var date = $("#trainDate").text();
+
+       showLoading();
+
+       $.ajax({
+           url:"/goupiao/path",
+           type:"GET",
+           data:{
+               trainId: trainId,
+               fromStationId: fromStationId,
+               toStationId: toStationId,
+               seatType: seatType,
+               date: date,
+               verifyCodeStr: verifyCode
+           },
+           success:function(data){
+               if(data.code == 0){
+                   var path = data.data;
+                   doGoupiao(path);
+               } else if (data.code==500503){
+                   layer.msg(data.msg);
+                   //验证码输入错误后会自动属性生成行的验证码，并服务端缓存
+                   refreshVerifyCode();
+               }
+               else {
+                   layer.msg(data.msg);
+                   refreshVerifyCode();
+               }
+           },
+           error:function(){
+               layer.msg("客户端请求有误");
+           }
+       });
+   }
+
+   function doGoupiao(path){
+       var seatType = $("#seatType").val();
+       if($.isEmptyObject(seatType)){
+           layer.confirm('请选择座位类型', {
+               btn: ['确定']
+           });
+
+           $("#seatType").focus();
+           return false;
+       }
+
+       var trainId = $("#trainId").val();
+       var fromStationId = $("#fromStationId").val();
+       var toStationId = $("#toStationId").val();
+       var date = $("#trainDate").text();
+
+       $.ajax({
+           //开始访问真正买票controller
+           url:"/goupiao/"+path+"/do",
+           type:"POST",
+           data:{
+               trainId: trainId,
+               fromStationId: fromStationId,
+               toStationId: toStationId,
+               seatType: seatType,
+               date: date
+           },
+           success:function(data){
+               if(data.code == 0){
+                   showLoading();
+
+                   var count = 40;  //最多轮询30次（10秒钟）
+
+                   for (count; count > 0; coutn--) {
+                       setTimeout(function(){
+                           getGoupiaoResult(trainId, fromStationId,
+                               toStationId, seatType, date);
+                       }, 250);
+                   }
+               }else{
+                   layer.msg(data.msg);
+                   setTimeout(function(){
+                       refreshVerifyCode();
+                   }, 1000);
+               }
+           },
+           error:function(){
+               layer.msg("客户端请求有误");
+           }
+       });
+
+   }
+
+   function getGoupiaoResult(trainId, fromStationId, toStationId, seatType, date){
+
+       $.ajax({
+           url:"/goupiao/result",
+           type:"GET",
+           data:{
+               trainId: trainId,
+               fromStationId: fromStationId,
+               toStationId: toStationId,
+               seatType: seatType,
+               date: date
+           },
+           success:function(data){
+               if(data.code == 0){
+                   var result = data.data;
+
+                   if(result == -1){
+                       layer.closeAll();
+
+                       layer.msg("余票不足!");
+
+                       setTimeout(function () {
+                           refreshVerifyCode();
+                       }, 1000);
+                   }else if(result == 1){
+                       layer.confirm("购票成功，是否查看订单？", {btn:["确定","取消"]},
+                           function(){
+                               window.location.href="/order";
+                           },
+                           function(){
+                               layer.closeAll();
+                               refreshVerifyCode();
+                           });
+                   }
+               }else{
+                   layer.msg(data.msg);
+                   refreshVerifyCode();
+               }
+           },
+           error:function(){
+               layer.msg("客户端请求有误");
+           }
+       });
+   }
+
+    $(function(){
+        $.ajax({
+            url: "/user",
+            type: "GET",
+            success: function(data){
+                if(data.code == 0){
+                    var user = data.data;
+
+                    getDetail(user);
+                }
+                else if(data.code == 500202) {
+                    layer.confirm('您还没有登录，请登录', {
+                        btn: ['确定'],
+                        yes: function() {
+                            window.location.href="/pages/login.htm";
+                        }
+                    });
+
+                    return false;
+                }
+                else {
+                    layer.msg(data.msg)
+                }
+            },
+            error: function(){
+                layer.msg("客户端请求错误,请刷新重试");
+            }
+        });
+    });
+
+    function getDetail(user) {
+        var fromCity = getQueryByName("fromCity", location.href);
+        var toCity = getQueryByName("toCity", location.href);
+        var date = getQueryByName("date", location.href);
+        var trainId = getQueryByName("trainId", location.href);
+
+        $.ajax({
+            url: "/trainDetail",
+            type: "GET",
+            data: {
+                fromCity: fromCity,
+                toCity: toCity,
+                date: date,
+                trainId: trainId
+            },
+            success: function(data){
+                if(data.code == 0){
+                    //加载所有数据
+                    render(data.data, user);
+
+                    //加载验证码
+                    $("#verifyCodeImg").attr("src", "/goupiao/verifyCode?trainId="+$("#trainId").val()
+                        + "&fromStationId="+$("#fromStationId").val()
+                        + "&toStationId="+$("#toStationId").val()
+                        + "&date=" + $("#trainDate").text() );
+                    $("#verifyCodeImg").show();
+                    $("#verifyCode").show();
+                }
+                else if(data.code == 500202) {
+                    layer.confirm('您还没有登录，请登录', {
+                        btn: ['确定'],
+                        yes: function() {
+                            window.location.href="/pages/login.htm";
+                        }
+                    });
+
+                    return false;
+                }
+                else {
+                    layer.msg(data.msg)
+                }
+            },
+            error: function(){
+                layer.msg("客户端请求错误,请刷新重试");
+            }
+        });
+    }
+
+   function render(train, user){
+       $("#trainId").val(train.trainId);
+       $("#fromStationId").val(train.fromStationId);
+       $("#toStationId").val(train.toStationId);
+
+        $("#trainDate").text(train.date.toString());
+        $("#trainName").text(train.trainName);
+        $("#fromStationName").text(train.fromStationName);
+        $("#fromTime").text("（" + train.fromTime.substr(3) + "）开");
+        $("#toStationName").text(train.toStationName);
+
+        $("#isLogin").text("您好，"+user.realName);
+
+       var dayNum = parseInt(train.toTime.substring(0,2));
+        if (dayNum != 0) {
+            $("#toTime").text("" + dayNum + "日后" + train.toTime.substr(3) + "到达");
+        }
+        else {
+            $("#toTime").text(train.toTime.substr(3));
+        }
+
+        $("#OPshangWuZuo").hide();
+        $("#OPyiDengZuo").hide();
+        $("#OPerDengZuo").hide();
+        $("#OPruanWo").hide();
+        $("#OPyingWo").hide();
+        $("#OPyingZuo").hide();
+        $("#OPwuZuo").hide();
+
+        if (true) {
+
+            if (train.stockMap['shangWuZuo'] != null) {
+                if (train.stockMap['shangWuZuo'] == 0) {
+                    var str = "商务座（￥" + train.priceMap['shangWuZuo'] + "）"
+                        + "无票";
+                    $("#shangWuZuo").text(str);
+                    $("#shangWuZuo").css("color","#999");
+                }
+                else {
+                    var str = "商务座（￥" + train.priceMap['shangWuZuo'] + "）"
+                        + train.stockMap['shangWuZuo'] + "张票";
+                    $("#shangWuZuo").text(str);
+                    $("#OPshangWuZuo").show();
+                    $("#OPshangWuZuo").text("商务座（￥" + train.priceMap['shangWuZuo'] + "）");
+                    $("#OPshangWuZuo").val(0);
+                }
+            }
+            else {
+                $("#shangWuZuo").hide();
+            }
+
+            if (train.stockMap['yiDengZuo'] != null) {
+                if (train.stockMap['yiDengZuo'] == 0) {
+                    var str = "一等座（￥" + train.priceMap['yiDengZuo'] + "）"
+                        + "无票";
+                    $("#yiDengZuo").text(str);
+                    $("#yiDengZuo").css("color","#999");
+                }
+                else {
+                    var str = "一等座（￥" + train.priceMap['yiDengZuo'] + "）"
+                        + train.stockMap['yiDengZuo'] + "张票";
+                    $("#yiDengZuo").text(str);
+                    $("#OPyiDengZuo").show();
+                    $("#OPyiDengZuo").text("一等座（￥" + train.priceMap['yiDengZuo'] + "）");
+                    $("#OPyiDengZuo").val(1);
+                }
+            }
+            else {
+                $("#yiDengZuo").hide();
+            }
+
+            if (train.stockMap['erDengZuo'] != null) {
+                if (train.stockMap['erDengZuo'] == 0) {
+                    var str = "二等座（￥" + train.priceMap['erDengZuo'] + "）"
+                        + "无票";
+                    $("#erDengZuo").text(str);
+                    $("#erDengZuo").css("color","#999");
+                }
+                else {
+                    var str = "二等座（￥" + train.priceMap['erDengZuo'] + "）"
+                        + train.stockMap['erDengZuo'] + "张票";
+                    $("#erDengZuo").text(str);
+                    $("#OPerDengZuo").show();
+                    $("#OPerDengZuo").text("二等座（￥" + train.priceMap['erDengZuo'] + "）");
+                    $("#OPerDengZuo").val(2);
+                }
+            }
+            else {
+                $("#erDengZuo").hide();
+            }
+
+            if (train.stockMap['ruanWo'] != null) {
+                if (train.stockMap['ruanWo'] == 0) {
+                    var str = "软卧（￥" + train.priceMap['ruanWo'] + "）"
+                        + "无票";
+                    $("#ruanWo").text(str);
+                    $("#ruanWo").css("color","#999");
+                }
+                else {
+                    var str = "软卧（￥" + train.priceMap['ruanWo'] + "）"
+                        + train.stockMap['ruanWo'] + "张票";
+                    $("#ruanWo").text(str);
+                    $("#OPruanWo").show();
+                    $("#OPruanWo").text("软卧（￥" + train.priceMap['ruanWo'] + "）");
+                    $("#OPruanWo").val(3);
+                }
+            }
+            else {
+                $("#ruanWo").hide();
+            }
+
+            if (train.stockMap['yingWo'] != null) {
+                if (train.stockMap['yingWo'] == 0) {
+                    var str = "硬卧（￥" + train.priceMap['yingWo'] + "）"
+                        + "无票";
+                    $("#yingWo").text(str);
+                    $("#yingWo").css("color","#999");
+                }
+                else {
+                    var str = "硬卧（￥" + train.priceMap['yingWo'] + "）"
+                        + train.stockMap['yingWo'] + "张票";
+                    $("#yingWo").text(str);
+                    $("#OPyingWo").show();
+                    $("#OPyingWo").text("硬卧（￥" + train.priceMap['yingWo'] + "）");
+                    $("#OPyingWo").val(4);
+                }
+            }
+            else {
+                $("#yingWo").hide();
+            }
+
+            if (train.stockMap['yingZuo'] != null) {
+                if (train.stockMap['yingZuo'] == 0) {
+                    var str = "硬座（￥" + train.priceMap['yingZuo'] + "）"
+                        + "无票";
+                    $("#yingZuo").text(str);
+                    $("#yingZuo").css("color","#999");
+                }
+                else {
+                    var str = "硬座（￥" + train.priceMap['yingZuo'] + "）"
+                        + train.stockMap['yingZuo'] + "张票";
+                    $("#yingZuo").text(str);
+                    $("#OPyingZuo").show();
+                    $("#OPyingZuo").text("硬座（￥" + train.priceMap['yingZuo'] + "）");
+                    $("#OPyingZuo").val(5);
+                }
+            }
+            else {
+                $("#yingZuo").hide();
+            }
+
+            if (train.stockMap['wuZuo'] != null) {
+                if (train.stockMap['wuZuo'] == 0) {
+                    var str = "无座（￥" + train.priceMap['wuZuo'] + "）"
+                        + "无票";
+                    $("#wuZuo").text(str);
+                    $("#wuZuo").css("color","#999");
+                }
+                else {
+                    var str = "无座（￥" + train.priceMap['wuZuo'] + "）"
+                        + train.stockMap['wuZuo'] + "张票";
+                    $("#wuZuo").text(str);
+                    $("#OPwuZuo").show();
+                    $("#OPwuZuo").text("无座（￥" + train.priceMap['wuZuo'] + "）");
+                    $("#OPwuZuo").val(6);
+                }
+            }
+            else {
+                $("#wuZuo").hide();
+            }
+        }
+
+        $("#userName").text("用户名：" + user.userName);
+        $("#realName").text(user.realName);
+        $("#idCard").text(user.idCard);
+        $("#telephone").text(user.telephone);
+    }
+
+
+    function refreshVerifyCode(){
+        $("#verifyCodeImg").attr("src", "/goupiao/verifyCode?trainId="+$("#trainId").val()
+            + "&fromStationId="+$("#fromStationId").val()
+            + "&toStationId="+$("#toStationId").val()
+            + "&date=" + $("#trainDate").text()
+            + "&timestamp="+new Date().getTime()
+        );
+    }
+
+    function getQueryByName(name,url){
+        if (!url) {
+            url = window.location.href;
+        }
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp("[?&amp;]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+</script>
+
+</html>

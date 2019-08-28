@@ -1,0 +1,196 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:include="header::header"></div>
+    <title>中转车次信息</title>
+</head>
+
+<body>
+<div>
+    <input id="user" type="hidden" th:value="${user}" />
+    <input id="fromCity" type="hidden" th:value="${fromCity}" />
+    <input id="toCity" type="hidden" th:value="${toCity}" />
+    <input id="date" type="hidden" th:value="${date}" />
+</div>
+
+<div class="bg-info container" style="width:100%; padding-inline: auto; padding: 10px;">
+    <div class="row">
+        <div class="col-xs-3" align="center">
+            <span style="color:#efaf38">
+                <a href="/pages/login.htm">登录</a>
+                |
+                <a href="/pages/register.htm">注册</a>
+            </span>
+        </div>
+        <div class="col-xs-3" align="left">
+            <a href="/index" style="font-weight: bold; font-size: large; font-style: inherit">
+                查询车次</a>
+        </div>
+        <div class="col-xs-3" align="right">
+            <a href="/order" style="font-weight: bold; font-size: large; font-style: inherit;">
+                我的车票</a>
+        </div>
+        <div class="col-xs-3" align="center">
+            <span style="color:#23527c" class="glyphicon glyphicon-user"></span>
+            <span style="color:#23527c" th:text="${user != null}?'您好，'"></span>
+            <span style="color:#efaf38" th:text="${user != null} ? ${user.realName} : '未登录'"></span>
+        </div>
+    </div>
+</div>
+<br/>
+<br/>
+<br/>
+
+<div class="panel panel-info workingArea">
+    <div class="panel-heading" align="center" style="font-weight: bold">中转车次信息</div>
+    <div class="panel-body" >
+        <div class="listDataTableDiv">
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr class="success">
+                    <td align="center">方案</td>
+                    <td align="center">车次</td>
+                    <td align="center">出发站</td>
+                    <td align="center">到达站</td>
+                    <td align="center">出发时间</td>
+                    <td align="center">到达时间</td>
+                    <td align="center">历时</td>
+                    <td align="center">商务座</td>
+                    <td align="center">一等座</td>
+                    <td align="center">二等座</td>
+                    <td align="center">软卧</td>
+                    <td align="center">硬卧</td>
+                    <td align="center">硬座</td>
+                    <td align="center">无座</td>
+                    <td align="center">备注</td>
+                </tr>
+                </thead>
+
+                <tbody th:id = "trainList">
+                <tr>
+                    <td th:hidden="${trainList == null}?'false':'true'" th:colspan="15" align="center" style="padding-top: 45px; padding-bottom: 45px; font-size: large; font-weight: bold; color: rgba(237,134,0,0.6);"
+                        th:text="${trainList == null} ? ('暂无'+${date}+''+${fromCity}+'至'+${toCity}+'中转车次,您可尝试直达方案或选择其他出行日期')">
+                    </td>
+                </tr>
+                <tr th:each="train,status: ${trainList}" class="warning">
+                    <input th:id="|trainListLength${status.index}|" type="hidden" th:value="${status.size}" />
+                    <td align="center" th:rowspan="${status.count % 2  == 1}?'2'" th:hidden="${status.count % 2  == 0}?'true'"
+                        style="padding-top: 28px" th:text="${status.count % 2  == 1}?('方案'+(${status.count}+1)/2)"></td>
+                    <td align="center" th:text="${train.trainName}"></td>
+                    <td align="center" th:text="${train.fromStationName}"></td>
+                    <td align="center" th:text="${train.toStationName}"></td>
+                    <td align="center" th:id="|thFromTime${status.index}|" th:text="${train.fromTime}"></td>
+                    <td align="center" th:id="|thToTime${status.index}|" th:text="${train.toTime}"></td>
+                    <td align="center" th:id="|thPastTime${status.index}|" th:text="${train.pastTime}"></td>
+                    <td align="center" th:text="${train.stockMap['shangWuZuo'] != null} ? (${train.stockMap['shangWuZuo'] != 0} ? ${train.stockMap['shangWuZuo']} : '无') : '--'" ></td>
+                    <td align="center" th:text="${train.stockMap['yiDengZuo'] != null} ? (${train.stockMap['yiDengZuo'] != 0} ? ${train.stockMap['yiDengZuo']} : '无') : '--'" ></td>
+                    <td align="center" th:text="${train.stockMap['erDengZuo'] != null} ? (${train.stockMap['erDengZuo'] != 0} ? ${train.stockMap['erDengZuo']} : '无') : '--'" ></td>
+                    <td align="center" th:text="${train.stockMap['ruanWo'] != null} ? (${train.stockMap['ruanWo'] != 0} ? ${train.stockMap['ruanWo']} : '无') : '--'" ></td>
+                    <td align="center" th:text="${train.stockMap['yingWo'] != null} ? (${train.stockMap['yingWo'] != 0} ? ${train.stockMap['yingWo']} : '无') : '--'" ></td>
+                    <td align="center" th:text="${train.stockMap['yingZuo'] != null} ? (${train.stockMap['yingZuo'] != 0} ? ${train.stockMap['yingZuo']} : '无') : '--'" ></td>
+                    <td align="center" th:text="${train.stockMap['wuZuo'] != null} ? (${train.stockMap['wuZuo'] != 0} ? ${train.stockMap['wuZuo']} : '无') : '--'" ></td>
+                    <td align="center">
+                        <!--                        <input id="trainId" type="hidden" th:value="${train.trainId}" />-->
+                        <button type="submit" th:onclick="|doClick('${train.fromCity}', '${train.toCity}', '${train.date}', ${train.trainId})|"
+                                class="btn btn-success" style="padding: 0px 25px"
+                                th:disabled="${train.flagOfNoStock} ? 'true' : 'false'" >预定</button>
+                        <!--                        <a th:href="@{/pages/train_detail.htm(fromCity=${train.fromCity},-->
+                        <!--                        toCity=${train.toCity}, date=${train.date}, userName=${user.userName})}">-->
+                        <!--                            <button type="submit" onclick="doClick()"-->
+                        <!--                                    class="btn btn-success" style="padding: 0px 25px"-->
+                        <!--                                    th:disabled="${train.flagOfNoStock} ? 'true' : 'false'" >预定</button>-->
+                        <!--                        </a>-->
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<div th:include="footer::footer"></div>
+
+</body>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    $(function () {
+        var num = $("#trainListLength"+0).val();
+        var i;
+        for (i = 0; i <= num; i++) {
+            var textToTime = $("#thToTime"+i).text();
+            var dayNum = parseInt(textToTime.substring(0,2));
+            if (dayNum != 0) {
+                $("#thToTime"+i).text("" + dayNum + "日后 " + textToTime.substr(3));
+            }
+            else {
+                $("#thToTime"+i).text(textToTime.substr(3));
+            }
+
+            var textFromTime = $("#thFromTime"+i).text();
+            dayNum = parseInt(textFromTime.substring(0,2));
+            if (dayNum != 0) {
+                $("#thFromTime"+i).text("" + dayNum + "日后 " + textFromTime.substr(3));
+            }
+            else {
+                $("#thFromTime"+i).text(textFromTime.substr(3));
+            }
+
+            var textPastTime = $("#thPastTime"+i).text();
+            dayNum = parseInt(textPastTime.substring(0,2));
+            var shiNum = parseInt(textPastTime.substring(3,5));
+            var fenNum = parseInt(textPastTime.substring(6,8));
+            if (dayNum != 0) {
+                $("#thPastTime"+i).text("" + dayNum + "日"
+                    + shiNum + "时"
+                    + fenNum + "分"
+                );
+            }
+            else if (shiNum != 0) {
+                $("#thPastTime"+i).text(shiNum + "时"
+                    + fenNum + "分"
+                );
+            } else if (fenNum != 0) {
+                $("#thPastTime"+i).text(fenNum + "分"
+                );
+            } else {
+
+            }
+        }
+    });
+    /*]]>*/
+
+    function doClick(fromCity, toCity, date, trainId){
+        var user = $("#user").val();
+        // var trainId = $("#trainId").val();
+
+        if ($.isEmptyObject(user)) {
+            layer.confirm('您还没有登录，请登录', {
+                btn: ['确定','取消'],
+                yes: function() {
+                    window.location.href="/pages/login.htm";
+                },
+                btn2:function() {
+                    layer.closeAll();
+                }
+            });
+
+            return false;
+        }
+        else {
+            window.location.href="/pages/train_detail.htm?fromCity="
+                +encodeURI(fromCity)+"&amp;toCity="
+                +encodeURI(toCity)+"&amp;date="
+                +encodeURI(date)+"&amp;trainId="
+                +encodeURI(trainId);
+            return true;
+        }
+
+    }
+</script>
+
+</html>
+
+
+

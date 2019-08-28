@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/3.3.6/bootstrap.min.css" />
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/jquery-validation/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/jquery-validation/localization/messages_zh.min.js"></script>
+    <script type="text/javascript" src="/layer/layer.js"></script>
+    <script type="text/javascript" src="/js/md5.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <link rel="stylesheet" type="text/css" href="/back/style.css" />
+
+    <title>登录</title>
+
+    <style type="text/css">
+        html,body{
+            height:100%;
+            width:100%;
+        }
+        body{
+            background:url('/img/BackGroundImage.jpg') no-repeat;
+            background-size:100% 100%;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+
+<body>
+<div class="bg-info container" style="width:100%; padding-inline: auto; padding: 10px;">
+    <div class="row">
+        <div class="col-xs-3" align="center"></div>
+        <div class="col-xs-3" align="left">
+            <a href="/index" style="font-weight: bold; font-size: large; font-style: inherit">
+                查询车次</a>
+        </div>
+        <div class="col-xs-3" align="right">
+            <a href="/order" style="font-weight: bold; font-size: large; font-style: inherit;">
+                我的车票</a>
+        </div>
+        <div class="col-xs-3" align="center"></div>
+    </div>
+</div>
+<br/>
+<br/>
+<br/>
+
+<div class="panel panel-danger loginDiv">
+    <div class="panel-heading" align="center">登录</div>
+    <div class="panel-body">
+         <form id="loginForm">
+            <table class="selectTable table">
+                <tr>
+                    <td style="padding: 15px">账号</td>
+                    <td><input id="userName" name="userName" class="form-control" type="text" placeholder="用户名/手机号/邮箱" required="true" minlength="6" maxlength="20"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:15px">密码</td>
+                    <td><input id="password" name="password" class="form-control" type="password"  placeholder="密码" required="true" minlength="6" maxlength="10" />
+                    </td>
+                </tr>
+                <tr>
+                    <td align="left">
+                        <button class="btn btn-danger"
+                                type="reset" onclick="reset()">重置</button>
+                    </td>
+                    <td align="right">
+                        <button class="btn btn-danger"
+                                type="submit" onclick="login()">登录</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td align="right"><a href="/pages/register.htm">
+                        <span class="glyphicon glyphicon-hand-right"></span>没有账号？点击这里注册</a></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+</div>
+
+<div >
+    <div align="center">
+        <hr style="border:0;background-color:#093;height:1px;margin-top:80px"/>
+        <div class="text-warning">
+            -- 萝po的项目练习 --
+        </div>
+        <div class="text-warning">
+            -- github :
+            <a class="text-success" href="https://github.com/luopoQAQ">
+                https://github.com/luopoQAQ</a> --
+        </div>
+        <br/>
+    </div>
+</div>
+
+</body>
+<script>
+    function login(){
+        $("#loginForm").validate({
+            submitHandler:function(form){
+                doLogin();
+            }
+        });
+    }
+    function doLogin(){
+        showLoading();
+
+        var inputPass = $("#password").val();
+        var salt = passsword_salt;
+        var str = "" + salt.charAt(1) + salt.charAt(2)
+            + inputPass + salt.charAt(3) + salt.charAt(4);
+        var password = md5(str);
+
+        $.ajax({
+            url: "/doLogin",
+            type: "GET",
+            data:{
+                userName:$("#userName").val(),
+                password: password
+            },
+            success:function(data){
+                layer.closeAll();
+                if(data.code == 0){
+                    layer.msg("登录成功");
+                    setTimeout(function () {
+                        window.location.href="/index";
+                    }, 600);
+                }else if (data.code == 500202) {
+                    layer.confirm('您还没有登录，请登录', {
+                        btn: ['确定','取消'],
+                        yes: function() {
+                            window.location.href="/pages/login.htm";
+                        }
+                    });
+
+                    return false;
+                }else{
+                    layer.msg(data.msg);
+                }
+            },
+            error:function(){
+                layer.closeAll();
+            }
+        });
+    }
+</script>
+
+</html>

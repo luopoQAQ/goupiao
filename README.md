@@ -50,7 +50,7 @@
 
 ###### 2. 难点SQL脚本 
 * 根据出发地(fromCity)、目的地(toCity)、出发日期(date)查询车次信息
-  ···
+  ···sql
   select t.train_name as trainName
     t.train_id as trainId, 
     s1.station_name as fromStationName, " +

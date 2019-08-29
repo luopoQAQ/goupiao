@@ -28,15 +28,20 @@
   对于用户登录，如果三天之内曾登陆过，则下次访问网站会自动携带token，不需要再次手动登陆，以方便用户 <br>
 
 #### 三、项目实现： <br>
-##### 1.数据库设计： <br>
+###### 1. 数据库设计： <br>
 >数据库一共包括六张表，分别是： <br>
 * train：火车车次、类型信息 <br>
-![]
+![](https://github.com/luopoQAQ/goupiao/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1_image/train.PNG)
 * train_date：火车各个日期下状态信息 <br>
+![](https://github.com/luopoQAQ/goupiao/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1_image/train_data.PNG)
 * station：车次及与其相关站点具体信息 <br>
+![](https://github.com/luopoQAQ/goupiao/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1_image/station.PNG)
 * seat：车次及与其相关的座位信息 <br>
+![](https://github.com/luopoQAQ/goupiao/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1_image/seat.PNG)
 * user_：用户信息 <br>
+![](https://github.com/luopoQAQ/goupiao/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1_image/user_.PNG)
 * order_：火车票订单信息 <br>
+![](https://github.com/luopoQAQ/goupiao/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1_image/order_.PNG)
 
 
 

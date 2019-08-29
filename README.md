@@ -50,7 +50,7 @@
 
 ###### 2. 难点SQL脚本 
 * 根据出发地(fromCity)、目的地(toCity)、出发日期(date)查询车次信息
-  ···sql
+  ```Sql
   select t.train_name as trainName
     t.train_id as trainId, 
     s1.station_name as fromStationName, " +
@@ -72,7 +72,7 @@
      ) " +
   and s1.city_name = #{fromCity} and s2.city_name = #{toCity} " +
   order by fromTime ")
-  ···
+  ```
 * 根据出发地(fromCity)、目的地(toCity)、出发日期(date)查询**接续换乘**车次信息
   
 * 查询余票信息

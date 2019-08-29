@@ -6,6 +6,7 @@
   http://49.235.18.252/index <br>
 >后端：springboot + springmvc + mybatis + redis + rabbitMq + jsr303 + nginx <br>
 >前端：html + JQuery + BootStrap + Thymeleaf <br>
+>环境：数据库-mysql 服务器-nginx + tomcat
 
 #### 二、主要功能： <br>
 * 查询车次： <br>
@@ -32,16 +33,72 @@
 >数据库一共包括六张表，分别是： <br>
 * train：火车车次、类型信息 <br>
 ![](https://github.com/luopoQAQ/goupiao/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1_image/train.PNG)
-* train_date：火车各个日期下状态信息 <br>
-![](https://github.com/luopoQAQ/goupiao/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1_image/train_data.PNG)
+* train_state：火车各个日期下状态信息 <br>
+![](https://github.com/luopoQAQ/goupiao/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1_image/train_state.PNG)
 * station：车次及与其相关站点具体信息 <br>
 ![](https://github.com/luopoQAQ/goupiao/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1_image/station.PNG)
+![](https://github.com/luopoQAQ/goupiao/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1_image/station_index.PNG)
 * seat：车次及与其相关的座位信息 <br>
 ![](https://github.com/luopoQAQ/goupiao/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1_image/seat.PNG)
+![](https://github.com/luopoQAQ/goupiao/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1_image/seat_index.PNG)
 * user_：用户信息 <br>
 ![](https://github.com/luopoQAQ/goupiao/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1_image/user_.PNG)
+![](https://github.com/luopoQAQ/goupiao/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1_image/user_index.PNG)
 * order_：火车票订单信息 <br>
 ![](https://github.com/luopoQAQ/goupiao/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1_image/order_.PNG)
+![](https://github.com/luopoQAQ/goupiao/blob/master/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%AE%BE%E8%AE%A1_image/order_index.PNG)
+
+###### 2. 难点SQL脚本 
+* 根据出发地(fromCity)、目的地(toCity)、出发日期(date)查询车次信息
+  ···
+  select t.train_name as trainName
+    t.train_id as trainId, 
+    s1.station_name as fromStationName, " +
+    s2.station_name as toStationName, " +
+    s1.station_id as fromStationId, " +
+    s2.station_id as toStationId, " +
+    s1.arrive_time as fromTime, " +
+    s2.arrive_time as toTime " +
+  from station as s1 " +
+  left join station as s2 " +
+    on s1.train_id = s2.train_id and s1.station_id < s2.station_id " +
+  left join train t " +
+    on s1.train_id = t.train_id " +
+  where exists (" +
+     select train_id " +
+     from train_state ts " +
+     where s1.train_id = ts.train_id " +
+     and ts.date = #{date} and ts.state = '正常' " +
+     ) " +
+  and s1.city_name = #{fromCity} and s2.city_name = #{toCity} " +
+  order by fromTime ")
+  ···
+* 根据出发地(fromCity)、目的地(toCity)、出发日期(date)查询**接续换乘**车次信息
+  
+* 查询余票信息
+  
+* 生成订单（实际上就是插入一条不含具体数据的order_,只有相关联的ID，具体数据因为涉及到几乎所有表，再在后续插入，使每条订单数据的插入效率更高）
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

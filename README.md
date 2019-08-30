@@ -144,7 +144,7 @@
   * 缓存穿透 <br>
   因为采用了参数校验，所以完全避免了用户恶意访问，造成缓存穿透，给数据库造成 太大压力的问题 <br>
 
-* 详细信息页（trainDetail接口 与 train_detail.htm页面） <br>[GoupiaoController.java](https://github.com/luopoQAQ/goupiao/blob/master/src/main/java/com/luopo/goupiao/controller/GoupiaoController.java)[GoupiaoService](https://github.com/luopoQAQ/goupiao/blob/master/src/main/java/com/luopo/goupiao/service/GoupiaoService.java)
+* 详细信息页（trainDetail接口 与 train_detail.htm页面） <br>[GoupiaoController.java](https://github.com/luopoQAQ/goupiao/blob/master/src/main/java/com/luopo/goupiao/controller/GoupiaoController.java)    [GoupiaoService.java](https://github.com/luopoQAQ/goupiao/blob/master/src/main/java/com/luopo/goupiao/service/GoupiaoService.java)
   * 页面静态化 <br>
   train_detail页面实现了完全的静态化（相对于其他页面采用thymeleaf模板来说），因此次页面可以缓存在nginx中，对于具体车次详细数据的获取采用AJAX，对于进一步处理（购票接口等）更为方便 <br>
   

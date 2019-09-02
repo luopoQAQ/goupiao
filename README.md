@@ -50,7 +50,7 @@
 
 ###### 2. 难点SQL脚本 
 * 根据出发地(fromCity)、目的地(toCity)、出发日期(date)查询车次信息（车次信息经过处理会补充余票信息）
-  ```Sql
+  ```sql
   select t.train_name as trainName
     t.train_id as trainId, 
     s1.station_name as fromStationName, 
@@ -75,7 +75,7 @@
   ```
   
 * 根据出发地(fromCity)、目的地(toCity)、出发日期(date)查询**接续换乘**车次信息（查询到这些数据后还需要进一步处理才能转换成前端需要的trainList）
-  ```Sql
+  ```sql
   select station1.train_id as firstTrainId,
     station1.station_id as firstFromStationId, 
     station2.station_id as firstToStationId, 
@@ -99,7 +99,7 @@
   ```
   
 * 查询余票信息
-  ```Sql
+  ```sql
   select s.seat_type as seat_type, 
   count(s.seat_type) as stock  
   from seat as s  
@@ -117,7 +117,7 @@
   ```
   
 * 生成订单（实际上就是插入一条不含具体数据的order_,只有相关联的ID，具体数据因为涉及到几乎所有表，再在后续插入，使每条订单数据的插入效率更高）
-  ```Sql
+  ```sql
   insert into order_ (user_id, user_name, id_card, telephone, real_name, 
     train_id, from_station_id, to_station_id, seat_id, date ) 
   values ( #{user.userId}, #{user.userName}, 

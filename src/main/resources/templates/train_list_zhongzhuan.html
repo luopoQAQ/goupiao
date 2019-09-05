@@ -129,12 +129,17 @@
             }
 
             var textFromTime = $("#thFromTime"+i).text();
-            dayNum = parseInt(textFromTime.substring(0,2));
-            if (dayNum != 0) {
-                $("#thFromTime"+i).text("" + dayNum + "日后 " + textFromTime.substr(3));
+            if (i % 2 == 0) {
+                $("#thFromTime"+i).text(textFromTime.substr(3));
             }
             else {
-                $("#thFromTime"+i).text(textFromTime.substr(3));
+                dayNum = parseInt(textFromTime.substring(0,2));
+                if (dayNum != 0) {
+                    $("#thFromTime"+i).text("" + dayNum + "日后 " + textFromTime.substr(3));
+                }
+                else {
+                    $("#thFromTime"+i).text(textFromTime.substr(3));
+                }
             }
 
             var textPastTime = $("#thPastTime"+i).text();

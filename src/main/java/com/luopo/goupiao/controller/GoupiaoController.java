@@ -83,7 +83,7 @@ public class GoupiaoController implements InitializingBean  {
     public void afterPropertiesSet() throws Exception {
         List<Integer> trainIdList = trainService.getAllTrainId();
 
-        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd"); //制定日期格式
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd"); //制定日期格式
         Calendar c = Calendar.getInstance();
         java.util.Date date = new java.util.Date();
         c.setTime(date);
@@ -109,6 +109,18 @@ public class GoupiaoController implements InitializingBean  {
                     for (int fromStationId : stationIdList) {
                         for (int toStationId : stationIdList) {
                             if (fromStationId != toStationId) {
+                                String fromTime = trainService
+                                        .getTrainZhongzhuan(trainId, fromStationId, toStationId)
+                                        .getFromTime();
+
+                                int dayNum = Integer.parseInt(fromTime.substring(0, 2));
+                                if (dayNum != 0) {
+                                    Calendar cIn = Calendar.getInstance();
+                                    cIn.setTime(c.getTime());
+                                    cIn.add(Calendar.DATE, -dayNum); //将当前日期减dayNum天，这才是查询余票和下订单时的真正日期
+                                    dateStr = dateFormat.format(cIn.getTime());
+                                }
+
                                 hasNoStockMap.put("" + trainId + "_" + fromStationId + "_" + toStationId + "_" + seatType + "_" + dateStr, false);
 
                                 //在seatService里面会直接设置缓存
@@ -137,7 +149,7 @@ public class GoupiaoController implements InitializingBean  {
                                       @NotNull int fromStationId,
                                       @NotNull int toStationId,
                                       @NotNull int seatType,
-                                      @NotNull String date) {
+                                      @NotNull String date) throws ParseException {
 //        model.addAttribute("user", user);
         if(user == null) {
             return Result.error(CodeMsg.NOT_LOGIN);
@@ -161,7 +173,7 @@ public class GoupiaoController implements InitializingBean  {
                                    int toStationId,
                                    int seatType,
                                    String date,
-                                   @PathVariable("path") String path) {
+                                   @PathVariable("path") String path) throws ParseException {
         if(user == null) {
             return Result.error(CodeMsg.NOT_LOGIN);
         }
@@ -179,15 +191,31 @@ public class GoupiaoController implements InitializingBean  {
             return Result.error(CodeMsg.REQUEST_ILLEGAL);
         }
 
+        //！！！dateKey是处理后的date，因为可能存在购买该车次日期是之前的
+        String dateKey = date;
+
+        int dayNum = Integer.parseInt(trainService
+                .getTrainZhongzhuan(trainId, fromStationId, toStationId)
+                .getFromTime()
+                .substring(0, 2));
+
+        if (dayNum != 0) {
+            Calendar cIn = Calendar.getInstance();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            cIn.setTime(df.parse(date));
+            cIn.add(Calendar.DATE, -dayNum); //将当前日期减dayNum天，这才是查询余票和下订单时的真正日期
+            dateKey = df.format(cIn.getTime());
+        }
+
         //判断用户是否购买该车次当日车票
-        Order orderByUserAndDate = orderService.getOrderByUserAndDate(user.getUserId(), date, trainId);
+        Order orderByUserAndDate = orderService.getOrderByUserAndDate(user.getUserId(), dateKey, trainId);
         if (null != orderByUserAndDate) {
             return Result.error(CodeMsg.ORDER_BY_USER_AND_DATE);
         }
 
         //内存标记，减少redis访问
         Boolean noStockOnAreaAndSeatType = hasNoStockMap.get(
-                ""+trainId+"_"+fromStationId+"_"+toStationId+"_"+seatType+"_"+date);
+                ""+trainId+"_"+fromStationId+"_"+toStationId+"_"+seatType+"_"+dateKey);
 
         if (null!=noStockOnAreaAndSeatType && noStockOnAreaAndSeatType) {
             return Result.error(CodeMsg.HAS_NO_TRAIN_TICKET);
@@ -196,18 +224,18 @@ public class GoupiaoController implements InitializingBean  {
         //否则该车次该区间内车票暂时不为0
         //预减库存
         long stockOnArea = redisService.decr(GoupiaoKey.getStockOnArea,
-                ""+trainId+"_"+fromStationId+"_"+toStationId+"_"+seatType+"_"+date);
+                ""+trainId+"_"+fromStationId+"_"+toStationId+"_"+seatType+"_"+dateKey);
 
         if(stockOnArea < 0) {
             //map标记置true,使map层开始阻拦
             hasNoStockMap.put(
-                    ""+trainId+"_"+fromStationId+"_"+toStationId+"_"+seatType+"_"+date, true);
+                    ""+trainId+"_"+fromStationId+"_"+toStationId+"_"+seatType+"_"+dateKey, true);
             return Result.error(CodeMsg.HAS_NO_TRAIN_TICKET);
         }
 
         //判断该用户是否重复购票
         Order order = orderService.getOrder(user.getUserId(), trainId,
-                fromStationId, toStationId, date);
+                fromStationId, toStationId, dateKey);
         if(null != order) {
             return Result.error(CodeMsg.REPEATE_GOUPIAO);
         }
@@ -220,7 +248,8 @@ public class GoupiaoController implements InitializingBean  {
         goupiaoMessage.setTrainId(trainId);
         goupiaoMessage.setFromStationId(fromStationId);
         goupiaoMessage.setToStationId(toStationId);
-        goupiaoMessage.setDate(date);
+        goupiaoMessage.setDate(dateKey);
+        goupiaoMessage.setDateBefore(date);
         goupiaoMessage.setSeatType(seatType);
 
         sender.sendGoupiaoMessage(goupiaoMessage);

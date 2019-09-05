@@ -5,6 +5,7 @@ import com.luopo.goupiao.pojo.Order;
 import com.luopo.goupiao.pojo.Seat;
 import com.luopo.goupiao.pojo.User;
 import com.luopo.goupiao.redis.GoupiaoKey;
+import com.luopo.goupiao.redis.OrderKey;
 import com.luopo.goupiao.redis.RedisService;
 import com.luopo.goupiao.result.CodeMsg;
 import com.luopo.goupiao.result.Result;
@@ -19,6 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -35,6 +39,9 @@ public class GoupiaoService {
 
     @Autowired
     private SeatService seatService;
+
+    @Autowired
+    private TrainService trainService;
 
     public BufferedImage createVerifyCode(User user, int trainId, int fromStationId,
                                           int toStationId,
@@ -197,7 +204,24 @@ public class GoupiaoService {
     }
 
     public int getGoupiaoResult(int userId, int trainId, int fromStationId,
-                                int toStationId, int seatType, String date) {
+                                int toStationId, int seatType, String date) throws ParseException {
+        String dateKey = date;
+
+        int dayNum = Integer.parseInt(trainService
+                .getTrainZhongzhuan(trainId, fromStationId, toStationId)
+                .getFromTime()
+                .substring(0, 2));
+
+        if (dayNum != 0) {
+            Calendar cIn = Calendar.getInstance();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            cIn.setTime(df.parse(date));
+            cIn.add(Calendar.DATE, -dayNum); //将当前日期减dayNum天，这才是查询余票和下订单时的真正日期
+            dateKey = df.format(cIn.getTime());
+        }
+
+        date = dateKey;
+
         Order order = orderService.getOrder(userId, trainId,
                 fromStationId, toStationId, date);
         if(order != null) { //购票成功

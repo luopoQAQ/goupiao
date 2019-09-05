@@ -17,6 +17,7 @@ import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Service;
 
 import javax.naming.Reference;
+import java.util.Calendar;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -126,6 +127,14 @@ public class TrainService {
         it.setStockMap(stockMap);
         it.setPriceMap(priceMap);
 
+        int dayNum = Integer.parseInt(it.getFromTime().substring(0, 2));
+        if (dayNum != 0) {
+            Calendar c = Calendar.getInstance();
+            c.setTime(new java.util.Date(dateSql.getTime()));
+            c.add(Calendar.DATE, -dayNum); //将当前日期减dayNum天，这才是查询余票和下订单时的真正日期
+            dateSql = new java.sql.Date(c.getTime().getTime());
+        }
+
         List<SeatStockVo> seatStockVoList = seatService.getStock(it.getTrainId(),
                 dateSql, it.getFromStationId(), it.getToStationId());
 
@@ -139,8 +148,6 @@ public class TrainService {
 
         return it;
     }
-
-
 
     //用作将数据库中中文的座位类型改为英文，方便映射
     public String chineseTypeToEnglish(String chineseType) {

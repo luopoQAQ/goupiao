@@ -116,8 +116,11 @@
         var num = $("#trainListLength"+0).val();
         var i;
         for (i = 0; i <= num; i++) {
+            var textFromTime = $("#thFromTime"+i).text();
             var textToTime = $("#thToTime"+i).text();
-            var dayNum = parseInt(textToTime.substring(0,2));
+            var dayFromNum = parseInt(textFromTime.substring(0,2));
+            var dayToNum = parseInt(textToTime.substring(0,2));
+            var dayNum = dayToNum - dayFromNum;
             if (dayNum != 0) {
                 $("#thToTime"+i).text("" + dayNum + "日后 " + textToTime.substr(3));
             }
@@ -125,14 +128,8 @@
                 $("#thToTime"+i).text(textToTime.substr(3));
             }
 
-            var textFromTime = $("#thFromTime"+i).text();
-            dayNum = parseInt(textFromTime.substring(0,2));
-            if (dayNum != 0) {
-                $("#thFromTime"+i).text("" + dayNum + "日后 " + textFromTime.substr(3));
-            }
-            else {
-                $("#thFromTime"+i).text(textFromTime.substr(3));
-            }
+            textFromTime = $("#thFromTime"+i).text();
+            $("#thFromTime"+i).text(textFromTime.substr(3));
 
             var textPastTime = $("#thPastTime"+i).text();
             dayNum = parseInt(textPastTime.substring(0,2));

@@ -9,6 +9,15 @@ public class GoupiaoMessage {
     private int toStationId;
     private String date;
     private int seatType;
+    private String dateBefore;
+
+    public String getDateBefore() {
+        return dateBefore;
+    }
+
+    public void setDateBefore(String dateBefore) {
+        this.dateBefore = dateBefore;
+    }
 
     public int getSeatType() {
         return seatType;

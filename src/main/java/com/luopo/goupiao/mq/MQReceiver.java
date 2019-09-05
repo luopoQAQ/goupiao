@@ -59,6 +59,7 @@ public class MQReceiver {
         int toStationId = goupiaoMessage.getToStationId();
         int seatType = goupiaoMessage.getSeatType();
         String date = goupiaoMessage.getDate();
+        String dateBefore = goupiaoMessage.getDateBefore();
 
 //        List<SeatStockVo> seatStockVoList = seatService.getStock(trainId,
 //                fromStationId, toStationId, date);
@@ -111,7 +112,6 @@ public class MQReceiver {
                         fromStationId, toStationId, seatType, date);
 
                 //检查缓存是否有订单存在
-                //那边成功后会立即写入缓存
                 order = orderService.getOrder(user.getUserId(), trainId,
                         fromStationId, toStationId, date);
                 if (null != order) {
@@ -138,7 +138,7 @@ public class MQReceiver {
             Station fromStation = stationService.getStationByTrainIdAndStationId(trainId, fromStationId);
             order.setFromStationName(fromStation.getStationName());
             String fromTimeStr = fromStation.getArriveTime();
-            fromTimeStr = date + " " + fromTimeStr.substring(3, fromTimeStr.length()) + ":00";
+            fromTimeStr = dateBefore + " " + fromTimeStr.substring(3, fromTimeStr.length()) + ":00";
             //String转Date
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             java.util.Date fromTime =  dateFormat.parse(fromTimeStr);

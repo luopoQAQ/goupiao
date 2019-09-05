@@ -72,6 +72,7 @@
                     </td>
                 </tr>
                 <tr th:each="train,status: ${trainList}" class="warning">
+                    <input th:id="|trainListLength${status.index}|" type="hidden" th:value="${status.size}" />
                     <td align="center" th:text="${train.trainName}"></td>
                     <td align="center" th:text="${train.fromStationName}"></td>
                     <td align="center" th:text="${train.toStationName}"></td>
@@ -112,7 +113,7 @@
 <script th:inline="javascript">
     /*<![CDATA[*/
     $(function () {
-        var num = $("#trainList").length;
+        var num = $("#trainListLength"+0).val();
         var i;
         for (i = 0; i <= num; i++) {
             var textToTime = $("#thToTime"+i).text();
@@ -125,7 +126,13 @@
             }
 
             var textFromTime = $("#thFromTime"+i).text();
-            $("#thFromTime"+i).text(textFromTime.substr(3));
+            dayNum = parseInt(textFromTime.substring(0,2));
+            if (dayNum != 0) {
+                $("#thFromTime"+i).text("" + dayNum + "日后 " + textFromTime.substr(3));
+            }
+            else {
+                $("#thFromTime"+i).text(textFromTime.substr(3));
+            }
 
             var textPastTime = $("#thPastTime"+i).text();
             dayNum = parseInt(textPastTime.substring(0,2));
@@ -141,11 +148,12 @@
                 $("#thPastTime"+i).text(shiNum + "时"
                     + fenNum + "分"
                 );
-            } else {
+            } else if (fenNum != 0) {
                 $("#thPastTime"+i).text(fenNum + "分"
                 );
-            }
+            } else {
 
+            }
         }
     });
     /*]]>*/

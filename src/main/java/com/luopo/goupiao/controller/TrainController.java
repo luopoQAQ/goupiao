@@ -122,7 +122,7 @@ public class TrainController implements InitializingBean {
                 TrainVo trainVoTo = trainService.getTrainZhongzhuan(zhongzhuanVo.getSecondTrainId(),
                         zhongzhuanVo.getSecondFromStationId(), zhongzhuanVo.getSecondToStationId());
 
-                int dayNum = Integer.parseInt(trainVoFrom.getToTime().substring(0, 2));
+                int dayNum = Integer.parseInt(trainVoTo.getFromTime().substring(0, 2));
                 if (dayNum != 0) {
                     Calendar c = Calendar.getInstance();
                     c.setTime(dateJava);

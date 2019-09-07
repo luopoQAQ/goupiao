@@ -238,6 +238,10 @@ public class TrainController implements InitializingBean {
 
         List<TrainVo> trainVoList = trainService.listTrainVo(fromCity, toCity, date);
 
+        if (trainVoList == null) {
+            return Result.error(CodeMsg.TRAIN_TINGYUN);
+        }
+
         for (TrainVo it : trainVoList) {
             if (it.getTrainId() == trainId) {
                 return Result.success(it);

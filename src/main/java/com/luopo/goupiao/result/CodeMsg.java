@@ -22,7 +22,8 @@ public class CodeMsg {
 
     //查询模块 5004XX
     public static CodeMsg TRAIN_NO_EXIST_ON_CONDITIONS = new CodeMsg(500400, "该区间内相关车次不存在");
-    public static CodeMsg STATION_CAN_NOT_EQUAL = new CodeMsg(500400, "出发地和目的地不能相同");
+    public static CodeMsg TRAIN_TINGYUN = new CodeMsg(500401, "该日该列车次已停运");
+    public static CodeMsg STATION_CAN_NOT_EQUAL = new CodeMsg(500402, "出发地和目的地不能相同");
 
     //抢票模块 5005XX
     public static CodeMsg GOUPIAO_FAIL = new CodeMsg(500500, "购票失败");

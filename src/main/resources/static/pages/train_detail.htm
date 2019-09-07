@@ -366,7 +366,7 @@
                     return false;
                 }
                 else {
-                    layer.msg(data.msg)
+                    layer.msg(data.msg);
                 }
             },
             error: function(){
@@ -414,7 +414,10 @@
                     return false;
                 }
                 else {
-                    layer.msg(data.msg)
+                    layer.msg(data.msg);
+                    setTimeout(function () {
+                        window.location.href="/index";
+                    }, 1000);
                 }
             },
             error: function(){

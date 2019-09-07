@@ -8,7 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="be205d34-2754-4e07-8dab-1bf802a89384" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/controller/TrainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/controller/TrainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/pages/train_detail.htm" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/pages/train_detail.htm" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/classes/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -39,12 +39,51 @@
     <option name="isMigrated" value="true" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/train_list_zhongzhuan.html">
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/static/pages/train_detail.htm">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="584">
-              <caret line="103" column="21" lean-forward="true" selection-start-line="103" selection-start-column="21" selection-end-line="103" selection-end-column="21" />
+            <state relative-caret-position="416">
+              <caret line="443" column="14" lean-forward="true" selection-start-line="443" selection-start-column="14" selection-end-line="443" selection-end-column="14" />
+              <folding>
+                <element signature="n#style#0;n#span#0;n#div#3;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#1;n#div#3;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#3;n#div#0;n#div#1;n#div#1;n#body#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#4;n#div#0;n#div#1;n#div#1;n#body#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#3;n#body#0;n#!!top" expanded="true" />
+                <element signature="n#div#3;n#body#0;n#!!top" />
+                <element signature="n#style#0;n#hr#0;n#div#0;n#div#4;n#body#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/luopo/goupiao/controller/TrainController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="213">
+              <caret line="238" column="53" lean-forward="true" selection-start-line="238" selection-start-column="53" selection-end-line="238" selection-end-column="53" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/luopo/goupiao/service/TrainService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-990">
+              <caret line="61" column="29" lean-forward="true" selection-start-line="61" selection-start-column="29" selection-end-line="61" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/train_list.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="335">
+              <caret line="128" column="13" lean-forward="true" selection-start-line="128" selection-start-column="13" selection-end-line="128" selection-end-column="13" />
               <folding>
                 <element signature="n#style#0;n#span#2;n#div#3;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -54,11 +93,16 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/luopo/goupiao/controller/TrainController.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/train_list_zhongzhuan.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="124" column="63" selection-start-line="124" selection-start-column="63" selection-end-line="124" selection-end-column="63" />
+            <state relative-caret-position="60">
+              <caret line="120" column="36" selection-start-line="120" selection-start-column="36" selection-end-line="120" selection-end-column="36" />
+              <folding>
+                <element signature="n#style#0;n#span#2;n#div#3;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -147,7 +191,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/vo/ZhongzhuanVo.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/util/TestUtil.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/train_list_zhongzhuan" />
-        <option value="$PROJECT_DIR$/src/main/resources/static/pages/train_detail.htm" />
         <option value="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/controller/OrderController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/static/pages/login.htm" />
         <option value="$PROJECT_DIR$/src/main/resources/static/pages/register.htm" />
@@ -162,7 +205,6 @@
         <option value="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/result/CodeMsg.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/util/ValidatorUtil.java" />
         <option value="$PROJECT_DIR$/src/main/resources/templates/home.html" />
-        <option value="$PROJECT_DIR$/src/main/resources/templates/train_list_zhongzhuan.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/service/TrainService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/mq/GoupiaoMessage.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/controller/GoupiaoController.java" />
@@ -172,6 +214,8 @@
         <option value="$PROJECT_DIR$/src/main/resources/templates/train_list.html" />
         <option value="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/controller/TuipiaoController.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/luopo/goupiao/controller/TrainController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/train_list_zhongzhuan.html" />
+        <option value="$PROJECT_DIR$/src/main/resources/static/pages/train_detail.htm" />
       </list>
     </option>
   </component>
@@ -216,6 +260,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -361,6 +407,15 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="img" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="goupiao" type="b2602c69:ProjectViewProjectNode" />
+              <item name="goupiao" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -371,17 +426,10 @@
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="goupiao" type="b2602c69:ProjectViewProjectNode" />
-              <item name="goupiao" type="462c0819:PsiDirectoryNode" />
-              <item name="target" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -443,7 +491,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.GoupiaoApplication">
+  <component name="RunManager" selected="Maven.goupiao [clean]">
     <configuration name="goupiao [clean]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
       <MavenSettings>
         <option name="myGeneralSettings" />
@@ -503,8 +551,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Maven.goupiao [install]" />
         <item itemvalue="Maven.goupiao [clean]" />
+        <item itemvalue="Maven.goupiao [install]" />
       </list>
     </recent_temporary>
   </component>
@@ -559,7 +607,9 @@
       <workItem from="1567477134450" duration="94000" />
       <workItem from="1567677234223" duration="14794000" />
       <workItem from="1567702098046" duration="42000" />
-      <workItem from="1567742514965" duration="270000" />
+      <workItem from="1567742514965" duration="3793000" />
+      <workItem from="1567753666702" duration="62000" />
+      <workItem from="1567874367552" duration="725000" />
     </task>
     <task id="LOCAL-00001" summary="QAQ">
       <created>1567003416452</created>
@@ -603,11 +653,18 @@
       <option name="project" value="LOCAL" />
       <updated>1567691749554</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="修复关于中转次日车票购买时仍购买当日的bug">
+      <created>1567742990912</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1567742990912</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="325191000" />
+    <option name="totallyTimeSpent" value="329501000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -628,12 +685,12 @@
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Web" order="4" side_tool="true" />
       <window_info id="Designer" order="5" />
-      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.2680965" />
+      <window_info active="true" content_ui="combo" id="Project" order="6" visible="true" weight="0.27479893" />
       <window_info id="Structure" order="7" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Statistic" order="0" sideWeight="0.49865952" weight="0.6089466" />
       <window_info anchor="bottom" id="Terminal" order="1" weight="0.32756132" />
       <window_info anchor="bottom" id="Docker" order="2" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Messages" order="3" weight="0.32756132" />
+      <window_info anchor="bottom" id="Messages" order="3" weight="0.32658958" />
       <window_info anchor="bottom" id="Database Changes" order="4" />
       <window_info anchor="bottom" id="Version Control" order="5" weight="0.32803467" />
       <window_info anchor="bottom" id="Java Enterprise" order="6" weight="0.32756132" />
@@ -652,10 +709,10 @@
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info anchor="right" id="Database" order="4" weight="0.3297587" />
       <window_info anchor="right" id="Bean Validation" order="5" weight="0.3297587" />
-      <window_info anchor="right" id="Maven" order="6" weight="0.3297587" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="7" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="8" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="9" weight="0.25" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="6" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="7" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="9" weight="0.3297587" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -665,20 +722,14 @@
     <MESSAGE value="QAQ" />
     <MESSAGE value="修复关于中转车次查询到第二日的车次时，点击购买仍购买当前日期车票，而不是第二日车票的bug" />
     <MESSAGE value="修复关于购买该车次次日车票创建订单时仍减少本日车票的bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复关于购买该车次次日车票创建订单时仍减少本日车票的bug" />
+    <MESSAGE value="修复关于中转次日车票购买时仍购买当日的bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复关于中转次日车票购买时仍购买当日的bug" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/luopo/goupiao/vo/LoginVo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="104">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/luopo/goupiao/validator/IsIdCard.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
@@ -985,51 +1036,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/static/pages/train_detail.htm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="310" column="40" lean-forward="true" selection-start-line="310" selection-start-column="40" selection-end-line="310" selection-end-column="40" />
-          <folding>
-            <element signature="n#style#0;n#span#0;n#div#3;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#1;n#div#3;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#3;n#div#0;n#div#1;n#div#1;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#4;n#div#0;n#div#1;n#div#1;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#3;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#div#3;n#body#0;n#!!top" />
-            <element signature="n#style#0;n#hr#0;n#div#0;n#div#4;n#body#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/luopo/goupiao/mapper/SeatMapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="377">
           <caret line="76" column="15" selection-start-line="76" selection-start-column="15" selection-end-line="76" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/train_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="114" column="14" lean-forward="true" selection-start-line="114" selection-start-column="14" selection-end-line="114" selection-end-column="14" />
-          <folding>
-            <element signature="n#style#0;n#span#2;n#div#3;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/order.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-598">
-          <caret line="123" column="33" lean-forward="true" selection-start-line="123" selection-start-column="33" selection-end-line="123" selection-end-column="33" />
-          <folding>
-            <element signature="n#style#0;n#span#1;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#2;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#1;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#td#0;n#tr#1;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1108,17 +1118,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/luopo/goupiao/service/TrainService.java">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="134" column="44" lean-forward="true" selection-start-line="134" selection-start-column="44" selection-end-line="134" selection-end-column="44" />
+        <state relative-caret-position="442">
+          <caret line="71" column="45" lean-forward="true" selection-start-line="71" selection-start-column="45" selection-end-line="71" selection-end-column="45" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/train_list_zhongzhuan.html">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/order.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="584">
-          <caret line="103" column="21" lean-forward="true" selection-start-line="103" selection-start-column="21" selection-end-line="103" selection-end-column="21" />
+        <state relative-caret-position="3198">
+          <caret line="123" column="33" lean-forward="true" selection-start-line="123" selection-start-column="33" selection-end-line="123" selection-end-column="33" />
+          <folding>
+            <element signature="n#style#0;n#span#1;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#2;n#div#3;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#1;n#td#4;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#td#0;n#tr#1;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luopo/goupiao/controller/TrainController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="238" column="53" lean-forward="true" selection-start-line="238" selection-start-column="53" selection-end-line="238" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/luopo/goupiao/service/TrainService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-990">
+          <caret line="61" column="29" lean-forward="true" selection-start-line="61" selection-start-column="29" selection-end-line="61" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/train_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="128" column="13" lean-forward="true" selection-start-line="128" selection-start-column="13" selection-end-line="128" selection-end-column="13" />
           <folding>
             <element signature="n#style#0;n#span#2;n#div#3;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -1127,10 +1167,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/luopo/goupiao/controller/TrainController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/train_list_zhongzhuan.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="124" column="63" selection-start-line="124" selection-start-column="63" selection-end-line="124" selection-end-column="63" />
+        <state relative-caret-position="60">
+          <caret line="120" column="36" selection-start-line="120" selection-start-column="36" selection-end-line="120" selection-end-column="36" />
+          <folding>
+            <element signature="n#style#0;n#span#2;n#div#3;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/pages/train_detail.htm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="443" column="14" lean-forward="true" selection-start-line="443" selection-start-column="14" selection-end-line="443" selection-end-column="14" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#div#3;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#div#3;n#div#0;n#div#0;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#3;n#div#0;n#div#1;n#div#1;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#4;n#div#0;n#div#1;n#div#1;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#div#3;n#body#0;n#!!top" />
+            <element signature="n#style#0;n#hr#0;n#div#0;n#div#4;n#body#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

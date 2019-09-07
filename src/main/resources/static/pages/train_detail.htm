@@ -428,17 +428,18 @@
        $("#fromStationId").val(train.fromStationId);
        $("#toStationId").val(train.toStationId);
 
-        $("#trainDate").text(train.date.toString());
-        $("#trainName").text(train.trainName);
-        $("#fromStationName").text(train.fromStationName);
-        $("#fromTime").text("（" + train.fromTime.substr(3) + "）开");
-        $("#toStationName").text(train.toStationName);
+       $("#trainDate").text(train.date.toString());
+       $("#trainName").text(train.trainName);
+       $("#fromStationName").text(train.fromStationName);
+       $("#fromTime").text("（" + train.fromTime.substr(3) + "）开");
+       $("#toStationName").text(train.toStationName);
 
-        $("#isLogin").text("您好，"+user.realName);
+       $("#isLogin").text("您好，"+user.realName);
 
-       var dayNum = parseInt(train.toTime.substring(0,2));
-        if (dayNum != 0) {
-            $("#toTime").text("" + dayNum + "日后" + train.toTime.substr(3) + "到达");
+       var dayNum = parseInt(train.toTime.substring(0,2))
+           - parseInt(train.fromTime.substring(0,2));
+       if (dayNum != 0) {
+            $("#toTime").text("" + dayNum + "日后" + train.toTime.substr(3));
         }
         else {
             $("#toTime").text(train.toTime.substr(3));

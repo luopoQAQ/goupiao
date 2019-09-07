@@ -3,7 +3,8 @@
 ### 一个简单的火车票购票网站，主要关注在高并发情况下如何缓解抢票压力
 
 #### 一、项目地址及技术栈： <br>
-  http://49.235.18.252/index <br>
+>项目地址（账号：qaqqaq， 密码：qaqqaq，懒得注册可以用这个测试账号）
+  http://49.235.18.252/index <br>  
 >后端：springboot + springmvc + mybatis + redis + rabbitMq + jsr303 + nginx <br>
 >前端：html + JQuery + BootStrap + Thymeleaf <br>
 >环境：数据库-mysql 服务器-nginx + tomcat

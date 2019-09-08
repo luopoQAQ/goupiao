@@ -108,7 +108,7 @@ public class GoupiaoController implements InitializingBean  {
 
                     for (int fromStationId : stationIdList) {
                         for (int toStationId : stationIdList) {
-                            if (fromStationId != toStationId) {
+                            if (fromStationId < toStationId) {
                                 String fromTime = trainService
                                         .getTrainZhongzhuan(trainId, fromStationId, toStationId)
                                         .getFromTime();
@@ -121,7 +121,7 @@ public class GoupiaoController implements InitializingBean  {
                                     dateStr = dateFormat.format(cIn.getTime());
                                 }
 
-                                hasNoStockMap.put("" + trainId + "_" + fromStationId + "_" + toStationId + "_" + seatType + "_" + dateStr, false);
+//                                hasNoStockMap.put("" + trainId + "_" + fromStationId + "_" + toStationId + "_" + seatType + "_" + dateStr, false);
 
                                 //在seatService里面会直接设置缓存
                                 List<SeatStockVo> seatStockVoList = seatService.getStock(trainId, fromStationId, toStationId, dateStr);
@@ -139,6 +139,26 @@ public class GoupiaoController implements InitializingBean  {
                 }
             }
         }
+
+        //每隔5s刷新一次本地缓存（在退票后某些情况下最多有5s延迟）
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+//                    System.out.println("开始清除");
+                    hasNoStockMap.clear();
+
+                    try {
+                        Thread.sleep(5 * 1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        //每隔30s清空一次本地标识，防止数据较多，同时也是更新退票后同步redis与本地标识
+        thread.start();
     }
 
     @GetMapping(value="/result")

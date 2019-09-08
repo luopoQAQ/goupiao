@@ -9,6 +9,7 @@ import redis.clients.jedis.ScanParams;
 import redis.clients.jedis.ScanResult;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -16,6 +17,66 @@ public class RedisService {
 
     @Autowired
     JedisPool jedisPool;
+
+    private static final String LOCK_SUCCESS = "OK";
+    private static final String SET_IF_NOT_EXIST = "NX";
+    private static final String SET_WITH_EXPIRE_TIME = "PX";
+    private static final int DEFAULT_SLEEP_TIME = 10;
+    private static final Long UNLOCK_MSG = 1L;
+
+    //redis分布式阻塞锁
+    public void lock(String key, String request) throws InterruptedException {
+        Jedis jedis = null;
+
+        try {
+            jedis =  jedisPool.getResource();
+
+            //生成访问redis真正的key
+            String realKey = "lock_" + key;
+
+            for (;;){
+                String result = jedis.set(realKey, request, SET_IF_NOT_EXIST, SET_WITH_EXPIRE_TIME, 1000 * 30);
+                if (LOCK_SUCCESS.equals(result)){
+                    break ;
+                }
+
+                //防止一直消耗 CPU(阻塞10ms)
+                Thread.sleep(DEFAULT_SLEEP_TIME) ;
+            }
+        }finally {
+            returnToPool(jedis);
+        }
+    }
+
+    //解锁
+    public  boolean unlock(String key, String request){
+        //lua script
+        String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
+
+        Jedis jedis = null;
+
+        try {
+            jedis =  jedisPool.getResource();
+
+            //生成访问redis真正的key
+            String realKey = "lock_" + key;
+
+            Object result = jedis.eval(script,
+                            Collections.singletonList(realKey),
+                            Collections.singletonList(request));
+
+            if (UNLOCK_MSG.equals(result)){
+//                System.out.println("解锁成功！");
+
+                return true ;
+            }else {
+                return false ;
+            }
+        }finally {
+            returnToPool(jedis);
+        }
+
+    }
 
     //获取缓存值
     //已经经过stringToBean()设置，返回的是一个反向对象

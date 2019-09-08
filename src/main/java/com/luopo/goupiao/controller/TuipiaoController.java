@@ -9,7 +9,10 @@ import com.luopo.goupiao.redis.RedisService;
 import com.luopo.goupiao.result.CodeMsg;
 import com.luopo.goupiao.result.Result;
 import com.luopo.goupiao.service.OrderService;
+import com.luopo.goupiao.service.SeatService;
 import com.luopo.goupiao.util.SeatTypeUtil;
+import com.luopo.goupiao.util.UUIDUtil;
+import com.luopo.goupiao.vo.SeatStockVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
@@ -33,6 +36,9 @@ public class TuipiaoController {
     @Autowired
     RedisService redisService;
 
+    @Autowired
+    SeatService seatService;
+
     @PostMapping("/tuipiao")
     @ResponseBody
     public Result<String> tuipiao(Model model, User user,
@@ -41,7 +47,7 @@ public class TuipiaoController {
                                int fromStationId,
                                int toStationId,
                                String seatType,
-                               @RequestParam("date") String date ) throws ParseException {
+                               @RequestParam("date") String date ) throws ParseException, InterruptedException {
         if(user == null) {
             throw new GlobalException(CodeMsg.NOT_LOGIN);
         }
@@ -55,28 +61,46 @@ public class TuipiaoController {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String dateStr = dateFormat.format(dateFormat.parse(date));
 
+        String uuid = UUIDUtil.uuid();
+
+        //加锁
+        redisService.lock("tuipiao", uuid);
+
+//        Thread.sleep(5000);
+
         //删除orderId对应订单
         orderService.deleteOrder(orderId);
 
         int seatTypeInt = SeatTypeUtil.getSeatId(seatType);
 
-        // 先删除订单载更新缓存
+        // 先删除订单载更新相应缓存
+        redisService.delete(OrderKey.getOrder,
+                ""+user.getUserId()+"_"+trainId+"_"+fromStationId+"_"+toStationId+"_"+date);
+
+        //删除DB上的无票缓存标志
         redisService.delete(GoupiaoKey.isDBNoStock,
                 "" + trainId + "_" + fromStationId
                         + "_" + toStationId + "_" + seatTypeInt + "_" + dateStr);
 
-        redisService.set(GoupiaoKey.getStockOnArea,
-                ""+trainId+"_"+fromStationId+"_"+toStationId+"_"+seatTypeInt+"_"+dateStr,
-                1);
+        //更新redis预减库存值
+        List<SeatStockVo> seatStockVoList = seatService.getStock(trainId, fromStationId, toStationId, dateStr);
 
-        hasNoStockMap.put(
-                ""+trainId+"_"+fromStationId
-                        +"_"+toStationId+"_"+seatTypeInt+"_"+dateStr, false);
+        for (SeatStockVo seatStockVo : seatStockVoList) {
+            int seatTypeIn = SeatTypeUtil.getSeatId(seatStockVo.getSeatType());
+            int stockIn = seatStockVo.getStock();
+            redisService.set(GoupiaoKey.getStockOnArea,
+                    "" + trainId + "_" + fromStationId + "_" + toStationId + "_" + seatTypeIn + "_" + dateStr,
+                    stockIn);
+        }
 
-        redisService.delete(OrderKey.getOrder,
-                ""+user.getUserId()+"_"+trainId+"_"+fromStationId+"_"+toStationId+"_"+date);
+        //设置本地无票标志为false（只能设置该台tomcat上，对于其他服务器上的不能设置）
+//        hasNoStockMap.put(
+//                ""+trainId+"_"+fromStationId
+//                        +"_"+toStationId+"_"+seatTypeInt+"_"+dateStr, false);
+//
 
-
+        //解锁
+        redisService.unlock("tuipiao", uuid);
 
         return Result.success("成功");
     }
